@@ -1,0 +1,4494 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>DemandPulse | Demand Intelligence</title>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <style>
+
+        /* =========================================================
+           DEMANDPULSE
+           Complete frontend
+           ========================================================= */
+
+
+        :root {
+
+            --background: #0a0910;
+            --background-soft: #0f0d16;
+
+            --sidebar: #100e17;
+
+            --card: #15121d;
+            --card-hover: #1a1624;
+
+            --border: #292431;
+            --border-light: #332d3d;
+
+            --text: #f7f4fa;
+            --text-soft: #c3bdcb;
+            --text-muted: #817a8c;
+
+            --purple: #9b6cff;
+            --purple-light: #b89cff;
+            --purple-dark: #7041d6;
+
+            --orange: #e8a45d;
+            --orange-soft: #f1bd7c;
+
+            --green: #6fd6aa;
+            --red: #ef7188;
+            --yellow: #f3c969;
+
+            --shadow:
+                0 18px 50px rgba(0, 0, 0, 0.28);
+
+        }
+
+
+        * {
+
+            margin: 0;
+            padding: 0;
+
+            box-sizing: border-box;
+
+        }
+
+
+        html {
+
+            scroll-behavior: smooth;
+
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            background:
+
+                radial-gradient(
+                    circle at 80% 0%,
+                    rgba(155, 108, 255, 0.08),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 35% 100%,
+                    rgba(232, 164, 93, 0.035),
+                    transparent 35%
+                ),
+
+                var(--background);
+
+            color: var(--text);
+
+            font-family:
+
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+
+        }
+
+
+        button {
+
+            font-family: inherit;
+
+        }
+
+
+        /* =========================================================
+           APPLICATION LAYOUT
+           ========================================================= */
+
+
+        .application {
+
+            min-height: 100vh;
+
+            display: flex;
+
+        }
+
+
+        /* =========================================================
+           SIDEBAR
+           ========================================================= */
+
+
+        .sidebar {
+
+            position: fixed;
+
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            width: 238px;
+
+            padding: 25px 16px;
+
+            background:
+
+                linear-gradient(
+                    180deg,
+                    #111019 0%,
+                    #0d0b12 100%
+                );
+
+            border-right:
+                1px solid var(--border);
+
+            display: flex;
+
+            flex-direction: column;
+
+            z-index: 100;
+
+        }
+
+
+        /* LOGO */
+
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding:
+                5px 9px 30px;
+
+        }
+
+
+        .logo {
+
+            width: 45px;
+
+            height: 45px;
+
+            border-radius: 13px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #a378ff,
+                    #7145cf
+                );
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 900;
+
+            letter-spacing: -1px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(155,108,255,0.20);
+
+        }
+
+
+        .logo::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 29px;
+            height: 2px;
+
+            background:
+                var(--orange-soft);
+
+            transform:
+                rotate(-28deg);
+
+            left: 8px;
+            bottom: 11px;
+
+        }
+
+
+        .logo::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background:
+                var(--orange-soft);
+
+            right: 7px;
+            bottom: 8px;
+
+        }
+
+
+        .brand-name {
+
+            font-size: 18px;
+
+            font-weight: 800;
+
+            letter-spacing: -0.5px;
+
+        }
+
+
+        .brand-description {
+
+            color:
+                var(--text-muted);
+
+            font-size: 9px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.7px;
+
+            margin-top: 4px;
+
+        }
+
+
+        /* NAVIGATION */
+
+
+        .navigation-heading {
+
+            color:
+                #5e5868;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.7px;
+
+            text-transform: uppercase;
+
+            padding:
+                0 12px 10px;
+
+        }
+
+
+        .navigation {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 4px;
+
+        }
+
+
+        .navigation-button {
+
+            width: 100%;
+
+            border: 0;
+
+            background: transparent;
+
+            color:
+                #9b94a5;
+
+            border-radius: 10px;
+
+            padding:
+                12px 13px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            cursor: pointer;
+
+            font-size: 13px;
+
+            text-align: left;
+
+            transition:
+                all 0.2s ease;
+
+        }
+
+
+        .navigation-button:hover {
+
+            background:
+                rgba(255,255,255,0.035);
+
+            color: white;
+
+            transform:
+                translateX(2px);
+
+        }
+
+
+        .navigation-button.active {
+
+            background:
+                rgba(155,108,255,0.12);
+
+            color: white;
+
+            box-shadow:
+                inset 3px 0 0 var(--purple);
+
+        }
+
+
+        .navigation-icon {
+
+            width: 21px;
+
+            height: 21px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color:
+                #6e6778;
+
+            font-size: 14px;
+
+        }
+
+
+        .navigation-button.active
+        .navigation-icon {
+
+            color:
+                var(--purple-light);
+
+        }
+
+
+        /* SIDEBAR BOTTOM */
+
+
+        .sidebar-bottom {
+
+            margin-top: auto;
+
+        }
+
+
+        .system-status {
+
+            padding: 14px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,255,255,0.018);
+
+        }
+
+
+        .system-status-row {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+        }
+
+
+        .online-dot {
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background:
+                var(--green);
+
+            box-shadow:
+                0 0 12px
+                rgba(111,214,170,0.7);
+
+        }
+
+
+        .system-description {
+
+            color:
+                var(--text-muted);
+
+            font-size: 9px;
+
+            line-height: 1.5;
+
+            margin-top: 7px;
+
+        }
+
+
+        /* =========================================================
+           MAIN AREA
+           ========================================================= */
+
+
+        .main {
+
+            width:
+                calc(100% - 238px);
+
+            margin-left: 238px;
+
+            padding:
+                34px 40px 70px;
+
+        }
+
+
+        /* TOP HEADER */
+
+
+        .header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            margin-bottom: 28px;
+
+        }
+
+
+        .eyebrow {
+
+            color:
+                var(--purple-light);
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .header h1 {
+
+            font-size: 34px;
+
+            line-height: 1.1;
+
+            letter-spacing: -1.4px;
+
+            font-weight: 800;
+
+        }
+
+
+        .header-description {
+
+            color:
+                var(--text-muted);
+
+            font-size: 13px;
+
+            margin-top: 9px;
+
+        }
+
+
+        .connection-status {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding:
+                9px 13px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 50px;
+
+            background:
+                rgba(255,255,255,0.018);
+
+            color:
+                var(--text-soft);
+
+            font-size: 10px;
+
+        }
+
+
+        .connection-indicator {
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background:
+                var(--green);
+
+        }
+
+
+        .connection-status.offline
+        .connection-indicator {
+
+            background:
+                var(--red);
+
+        }
+
+
+        /* =========================================================
+           PAGE SYSTEM
+           ========================================================= */
+
+
+        .page {
+
+            display: none;
+
+            animation:
+                pageEnter 0.25s ease;
+
+        }
+
+
+        .page.active {
+
+            display: block;
+
+        }
+
+
+        @keyframes pageEnter {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(5px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+
+            }
+
+        }
+
+
+        /* =========================================================
+           STAT CARDS
+           ========================================================= */
+
+
+        .stat-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 14px;
+
+            margin-bottom: 16px;
+
+        }
+
+
+        .stat-card {
+
+            min-height: 128px;
+
+            padding: 19px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 15px;
+
+            background:
+
+                linear-gradient(
+                    145deg,
+                    rgba(23,20,31,0.98),
+                    rgba(17,15,23,0.98)
+                );
+
+            box-shadow:
+                var(--shadow);
+
+            transition:
+                transform 0.2s,
+                border-color 0.2s;
+
+        }
+
+
+        .stat-card:hover {
+
+            transform:
+                translateY(-2px);
+
+            border-color:
+                var(--border-light);
+
+        }
+
+
+        .stat-label {
+
+            color:
+                var(--text-muted);
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.3px;
+
+            text-transform: uppercase;
+
+        }
+
+
+        .stat-number {
+
+            font-size: 27px;
+
+            font-weight: 850;
+
+            letter-spacing: -1px;
+
+            margin-top: 10px;
+
+        }
+
+
+        .stat-number.purple {
+
+            color:
+                var(--purple-light);
+
+        }
+
+
+        .stat-number.orange {
+
+            color:
+                var(--orange-soft);
+
+        }
+
+
+        .stat-number.green {
+
+            color:
+                var(--green);
+
+        }
+
+
+        .stat-number.red {
+
+            color:
+                var(--red);
+
+        }
+
+
+        .stat-description {
+
+            color:
+                #696273;
+
+            font-size: 10px;
+
+            margin-top: 7px;
+
+        }
+
+
+        /* =========================================================
+           PANELS
+           ========================================================= */
+
+
+        .panel {
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 16px;
+
+            background:
+
+                linear-gradient(
+                    145deg,
+                    rgba(22,19,30,0.98),
+                    rgba(15,13,21,0.98)
+                );
+
+            box-shadow:
+                var(--shadow);
+
+            padding: 21px;
+
+        }
+
+
+        .panel-header {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .panel-title {
+
+            font-size: 15px;
+
+            font-weight: 750;
+
+            letter-spacing: -0.2px;
+
+        }
+
+
+        .panel-description {
+
+            color:
+                var(--text-muted);
+
+            font-size: 10px;
+
+            margin-top: 5px;
+
+        }
+
+
+        .panel-tag {
+
+            padding:
+                6px 9px;
+
+            border-radius: 50px;
+
+            background:
+                rgba(155,108,255,0.09);
+
+            color:
+                var(--purple-light);
+
+            font-size: 8px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            white-space: nowrap;
+
+        }
+
+
+        /* =========================================================
+           TWO COLUMN
+           ========================================================= */
+
+
+        .two-column {
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.6fr)
+                minmax(290px, 0.8fr);
+
+            gap: 16px;
+
+            margin-bottom: 16px;
+
+        }
+
+
+        .three-column {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 16px;
+
+        }
+
+
+        /* =========================================================
+           ALERT
+           ========================================================= */
+
+
+        .alert-panel {
+
+            background:
+
+                linear-gradient(
+                    145deg,
+                    rgba(39,31,23,0.75),
+                    rgba(20,17,22,0.98)
+                );
+
+            border-color:
+                rgba(232,164,93,0.2);
+
+        }
+
+
+        .alert-row {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+        }
+
+
+        .alert-icon {
+
+            width: 44px;
+            height: 44px;
+
+            flex-shrink: 0;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                rgba(232,164,93,0.09);
+
+            color:
+                var(--orange-soft);
+
+            font-size: 18px;
+
+            font-weight: 800;
+
+        }
+
+
+        .alert-title {
+
+            font-size: 13px;
+
+            font-weight: 750;
+
+        }
+
+
+        .alert-description {
+
+            color:
+                var(--text-muted);
+
+            font-size: 10px;
+
+            line-height: 1.5;
+
+            margin-top: 4px;
+
+        }
+
+
+        .alert-number {
+
+            margin-left: auto;
+
+            color:
+                var(--orange-soft);
+
+            font-size: 25px;
+
+            font-weight: 850;
+
+        }
+
+
+        /* =========================================================
+           FORECAST CARD
+           ========================================================= */
+
+
+        .forecast-number {
+
+            font-size: 41px;
+
+            font-weight: 850;
+
+            letter-spacing: -2px;
+
+            margin-top: 5px;
+
+        }
+
+
+        .forecast-unit {
+
+            color:
+                var(--text-muted);
+
+            font-size: 11px;
+
+            margin-left: 4px;
+
+        }
+
+
+        .status-pill {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            margin-top: 14px;
+
+            padding:
+                6px 9px;
+
+            border-radius: 50px;
+
+            background:
+                rgba(111,214,170,0.08);
+
+            color:
+                var(--green);
+
+            font-size: 8px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        /* =========================================================
+           CHART
+           ========================================================= */
+
+
+        .chart-container {
+
+            height: 315px;
+
+            position: relative;
+
+        }
+
+
+        .chart-container.large {
+
+            height: 360px;
+
+        }
+
+
+        .chart-container.small {
+
+            height: 245px;
+
+        }
+
+
+        /* =========================================================
+           TABLE
+           ========================================================= */
+
+
+        .table-container {
+
+            width: 100%;
+
+            overflow-x: auto;
+
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse:
+                collapse;
+
+        }
+
+
+        th {
+
+            text-align: left;
+
+            color:
+                #6f6879;
+
+            font-size: 8px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            font-weight: 800;
+
+            padding:
+                10px 8px;
+
+            border-bottom:
+                1px solid var(--border);
+
+        }
+
+
+        td {
+
+            color:
+                #c9c3d0;
+
+            font-size: 11px;
+
+            padding:
+                12px 8px;
+
+            border-bottom:
+                1px solid
+                rgba(41,36,49,0.7);
+
+        }
+
+
+        tr:last-child td {
+
+            border-bottom: none;
+
+        }
+
+
+        .badge {
+
+            display: inline-flex;
+
+            padding:
+                5px 8px;
+
+            border-radius: 50px;
+
+            font-size: 8px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+        }
+
+
+        .badge-critical {
+
+            background:
+                rgba(239,113,136,0.09);
+
+            color:
+                var(--red);
+
+        }
+
+
+        .badge-normal {
+
+            background:
+                rgba(111,214,170,0.09);
+
+            color:
+                var(--green);
+
+        }
+
+
+        /* =========================================================
+           INSIGHTS
+           ========================================================= */
+
+
+        .insight-list {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 9px;
+
+        }
+
+
+        .insight-item {
+
+            border:
+                1px solid var(--border);
+
+            background:
+                rgba(255,255,255,0.015);
+
+            border-radius: 10px;
+
+            padding:
+                12px;
+
+        }
+
+
+        .insight-name {
+
+            color:
+                var(--text-soft);
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+        }
+
+
+        .insight-value {
+
+            color:
+                var(--purple-light);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            margin-top: 4px;
+
+        }
+
+
+        .cluster-image {
+
+            width: 100%;
+
+            max-height: 330px;
+
+            object-fit: contain;
+
+            border-radius: 10px;
+
+            background:
+                #0c0a10;
+
+        }
+
+
+        /* =========================================================
+           BUTTON
+           ========================================================= */
+
+
+        .small-button {
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 8px;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            color:
+                var(--text-soft);
+
+            padding:
+                8px 11px;
+
+            cursor: pointer;
+
+            font-size: 9px;
+
+            transition:
+                0.2s;
+
+        }
+
+
+        .small-button:hover {
+
+            border-color:
+                var(--purple);
+
+            color: white;
+
+        }
+
+
+        /* =========================================================
+           ERROR
+           ========================================================= */
+
+
+        .backend-notice {
+
+            display: none;
+
+            padding:
+                13px 15px;
+
+            margin-bottom: 16px;
+
+            border:
+                1px solid
+                rgba(239,113,136,0.25);
+
+            border-radius: 11px;
+
+            background:
+                rgba(239,113,136,0.05);
+
+            color:
+                #f5a0af;
+
+            font-size: 10px;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* =========================================================
+           MOBILE
+           ========================================================= */
+
+
+        @media (
+            max-width: 1100px
+        ) {
+
+            .stat-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .two-column {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .three-column {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+        }
+
+
+        @media (
+            max-width: 750px
+        ) {
+
+            .sidebar {
+
+                width: 70px;
+
+                padding:
+                    18px 9px;
+
+            }
+
+
+            .brand {
+
+                justify-content: center;
+
+                padding:
+                    0 0 25px;
+
+            }
+
+
+            .brand-text,
+            .navigation-heading,
+            .navigation-label,
+            .system-status {
+
+                display: none;
+
+            }
+
+
+            .navigation-button {
+
+                justify-content:
+                    center;
+
+                padding:
+                    13px 5px;
+
+            }
+
+
+            .navigation-icon {
+
+                width: auto;
+
+            }
+
+
+            .main {
+
+                margin-left: 70px;
+
+                width:
+                    calc(100% - 70px);
+
+                padding:
+                    24px 16px 50px;
+
+            }
+
+
+            .header {
+
+                flex-direction:
+                    column;
+
+                gap: 15px;
+
+            }
+
+
+            .stat-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .header h1 {
+
+                font-size: 27px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="application">
+
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+
+    <aside class="sidebar">
+
+
+        <div class="brand">
+
+            <div class="logo">
+                DP
+            </div>
+
+
+            <div class="brand-text">
+
+                <div class="brand-name">
+                    DemandPulse
+                </div>
+
+                <div class="brand-description">
+                    Demand Intelligence
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="navigation-heading">
+            Workspace
+        </div>
+
+
+        <nav class="navigation">
+
+
+            <button
+                class="navigation-button active"
+                data-page="dashboard"
+            >
+
+                <span class="navigation-icon">
+                    ◈
+                </span>
+
+                <span class="navigation-label">
+                    Dashboard
+                </span>
+
+            </button>
+
+
+            <button
+                class="navigation-button"
+                data-page="forecast"
+            >
+
+                <span class="navigation-icon">
+                    ↗
+                </span>
+
+                <span class="navigation-label">
+                    Forecast
+                </span>
+
+            </button>
+
+
+            <button
+                class="navigation-button"
+                data-page="alerts"
+            >
+
+                <span class="navigation-icon">
+                    !
+                </span>
+
+                <span class="navigation-label">
+                    Alerts
+                </span>
+
+            </button>
+
+
+            <button
+                class="navigation-button"
+                data-page="trends"
+            >
+
+                <span class="navigation-icon">
+                    ≋
+                </span>
+
+                <span class="navigation-label">
+                    Demand Trends
+                </span>
+
+            </button>
+
+
+            <button
+                class="navigation-button"
+                data-page="insights"
+            >
+
+                <span class="navigation-icon">
+                    ✦
+                </span>
+
+                <span class="navigation-label">
+                    Insights
+                </span>
+
+            </button>
+
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+
+            <div class="system-status">
+
+                <div class="system-status-row">
+
+                    <span class="online-dot"></span>
+
+                    ML System Online
+
+                </div>
+
+
+                <div class="system-description">
+
+                    Demand analysis and
+                    forecasting services
+                    are available.
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+
+    <main class="main">
+
+
+        <!-- BACKEND CONNECTION -->
+
+        <div
+            class="backend-notice"
+            id="backendNotice"
+        ></div>
+
+
+
+        <!-- =================================================
+             DASHBOARD
+             ================================================= -->
+
+
+        <section
+            class="page active"
+            id="dashboard"
+        >
+
+
+            <div class="header">
+
+
+                <div>
+
+                    <div class="eyebrow">
+                        Demand Intelligence
+                    </div>
+
+
+                    <h1>
+                        Demand overview
+                    </h1>
+
+
+                    <p class="header-description">
+                        A simple view of what is happening with demand right now.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="connection-status"
+                    id="connectionStatus"
+                >
+
+                    <span
+                        class="connection-indicator"
+                    ></span>
+
+                    <span
+                        id="connectionText"
+                    >
+                        Connecting
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- SUMMARY CARDS -->
+
+
+            <div class="stat-grid">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Total Demand
+                    </div>
+
+                    <div
+                        class="stat-number"
+                        id="totalDemand"
+                    >
+                        —
+                    </div>
+
+                    <div class="stat-description">
+                        Total demand recorded
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Average Demand
+                    </div>
+
+                    <div
+                        class="stat-number purple"
+                        id="averageDemand"
+                    >
+                        —
+                    </div>
+
+                    <div class="stat-description">
+                        Average demand per observation
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Demand Alerts
+                    </div>
+
+                    <div
+                        class="stat-number orange"
+                        id="totalAlerts"
+                    >
+                        —
+                    </div>
+
+                    <div class="stat-description">
+                        Observations requiring attention
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Planning Status
+                    </div>
+
+                    <div
+                        class="stat-number green"
+                        id="planningStatus"
+                    >
+                        —
+                    </div>
+
+                    <div class="stat-description">
+                        Current demand condition
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ALERT + FORECAST -->
+
+
+            <div class="two-column">
+
+
+                <div class="panel alert-panel">
+
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <div class="panel-title">
+                                Demand alert
+                            </div>
+
+                            <div class="panel-description">
+                                Important changes detected in the demand pattern
+                            </div>
+
+                        </div>
+
+
+                        <span class="panel-tag">
+                            Live
+                        </span>
+
+                    </div>
+
+
+                    <div class="alert-row">
+
+
+                        <div class="alert-icon">
+                            !
+                        </div>
+
+
+                        <div>
+
+                            <div
+                                class="alert-title"
+                                id="dashboardAlertTitle"
+                            >
+                                Checking demand...
+                            </div>
+
+
+                            <div
+                                class="alert-description"
+                                id="dashboardAlertDescription"
+                            >
+                                Loading the latest demand signal.
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="alert-number"
+                            id="dashboardAlertNumber"
+                        >
+                            —
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="panel">
+
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <div class="panel-title">
+                                Latest forecast
+                            </div>
+
+                            <div class="panel-description">
+                                Most recent predicted demand
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <span
+                            class="forecast-number"
+                            id="latestForecast"
+                        >
+                            —
+                        </span>
+
+
+                        <span class="forecast-unit">
+                            units
+                        </span>
+
+                    </div>
+
+
+                    <div class="status-pill">
+
+                        <span>●</span>
+
+                        Forecast available
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- MAIN CHART -->
+
+
+            <div class="panel">
+
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <div class="panel-title">
+                            Demand forecast
+                        </div>
+
+                        <div class="panel-description">
+                            Actual demand compared with predicted demand
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="small-button"
+                        onclick="openPage('forecast')"
+                    >
+                        View forecast
+                    </button>
+
+                </div>
+
+
+                <div class="chart-container">
+
+                    <canvas
+                        id="dashboardChart"
+                    ></canvas>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             FORECAST PAGE
+             ================================================= -->
+
+
+        <section
+            class="page"
+            id="forecast"
+        >
+
+
+            <div class="header">
+
+                <div>
+
+                    <div class="eyebrow">
+                        Forecasting
+                    </div>
+
+                    <h1>
+                        Demand forecast
+                    </h1>
+
+                    <p class="header-description">
+                        See the expected demand direction without exposing technical model details.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="two-column">
+
+
+                <div class="panel">
+
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <div class="panel-title">
+                                Actual vs predicted demand
+                            </div>
+
+                            <div class="panel-description">
+                                Historical demand compared with forecast values
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="chart-container large">
+
+                        <canvas
+                            id="forecastChart"
+                        ></canvas>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="panel">
+
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <div class="panel-title">
+                                Latest prediction
+                            </div>
+
+                            <div class="panel-description">
+                                Most recent forecast generated by the system
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="forecast-number"
+                        id="forecastPageNumber"
+                    >
+                        —
+                    </div>
+
+
+                    <div class="forecast-unit">
+                        demand units
+                    </div>
+
+
+                    <div
+                        style="
+                            height:1px;
+                            background:var(--border);
+                            margin:25px 0;
+                        "
+                    ></div>
+
+
+                    <div class="stat-label">
+                        Forecast observations
+                    </div>
+
+
+                    <div
+                        class="stat-number"
+                        id="forecastRecords"
+                    >
+                        —
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="three-column">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Average Demand
+                    </div>
+
+                    <div
+                        class="stat-number purple"
+                        id="forecastAverage"
+                    >
+                        —
+                    </div>
+
+                    <div class="stat-description">
+                        Average observed demand
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Latest Prediction
+                    </div>
+
+                    <div
+                        class="stat-number orange"
+                        id="forecastLatestSmall"
+                    >
+                        —
+                    </div>
+
+                    <div class="stat-description">
+                        Latest expected demand
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Forecast Records
+                    </div>
+
+                    <div
+                        class="stat-number green"
+                        id="forecastRecordSmall"
+                    >
+                        —
+                    </div>
+
+                    <div class="stat-description">
+                        Available prediction observations
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             ALERTS PAGE
+             ================================================= -->
+
+
+        <section
+            class="page"
+            id="alerts"
+        >
+
+
+            <div class="header">
+
+                <div>
+
+                    <div class="eyebrow">
+                        Early warning
+                    </div>
+
+                    <h1>
+                        Demand alerts
+                    </h1>
+
+                    <p class="header-description">
+                        Review demand observations that may require planning attention.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="stat-grid">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Critical alerts
+                    </div>
+
+                    <div
+                        class="stat-number red"
+                        id="alertsPageCount"
+                    >
+                        —
+                    </div>
+
+                    <div class="stat-description">
+                        High-priority demand observations
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Current status
+                    </div>
+
+                    <div
+                        class="stat-number orange"
+                        id="alertsPageStatus"
+                    >
+                        —
+                    </div>
+
+                    <div class="stat-description">
+                        Overall planning condition
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="panel">
+
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <div class="panel-title">
+                            Recent demand alerts
+                        </div>
+
+                        <div class="panel-description">
+                            Simplified information for decision-making
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-container">
+
+
+                    <table>
+
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Date
+                                </th>
+
+                                <th>
+                                    Item
+                                </th>
+
+                                <th>
+                                    Demand
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody
+                            id="alertTable"
+                        ></tbody>
+
+
+                    </table>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             TRENDS PAGE
+             ================================================= -->
+
+
+        <section
+            class="page"
+            id="trends"
+        >
+
+
+            <div class="header">
+
+                <div>
+
+                    <div class="eyebrow">
+                        Demand monitoring
+                    </div>
+
+                    <h1>
+                        Demand trends
+                    </h1>
+
+                    <p class="header-description">
+                        Explore how demand has moved over the available observations.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="panel">
+
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <div class="panel-title">
+                            Demand movement
+                        </div>
+
+                        <div class="panel-description">
+                            Actual demand and forecast movement
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart-container large">
+
+                    <canvas
+                        id="trendChart"
+                    ></canvas>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="three-column">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Average demand
+                    </div>
+
+                    <div
+                        class="stat-number purple"
+                        id="trendAverage"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Observations
+                    </div>
+
+                    <div
+                        class="stat-number"
+                        id="trendObservations"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Alerts
+                    </div>
+
+                    <div
+                        class="stat-number orange"
+                        id="trendAlertCount"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             INSIGHTS PAGE
+             ================================================= -->
+
+
+        <section
+            class="page"
+            id="insights"
+        >
+
+
+            <div class="header">
+
+                <div>
+
+                    <div class="eyebrow">
+                        Decision support
+                    </div>
+
+                    <h1>
+                        Demand insights
+                    </h1>
+
+                    <p class="header-description">
+                        Understand what is influencing demand and the patterns detected in the data.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="two-column">
+
+
+                <div class="panel">
+
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <div class="panel-title">
+                                Key demand drivers
+                            </div>
+
+                            <div class="panel-description">
+                                The strongest factors contributing to demand predictions
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="insight-list"
+                        id="insightList"
+                    ></div>
+
+
+                </div>
+
+
+
+                <div class="panel">
+
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <div class="panel-title">
+                                Demand patterns
+                            </div>
+
+                            <div class="panel-description">
+                                Similar demand behaviors identified in the data
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <img
+                        class="cluster-image"
+                        id="clusterImage"
+                        alt="Demand pattern visualization"
+                    >
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="panel">
+
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <div class="panel-title">
+                            Demand drivers
+                        </div>
+
+                        <div class="panel-description">
+                            Relative contribution of the available demand-related features
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart-container large">
+
+                    <canvas
+                        id="featureChart"
+                    ></canvas>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+
+<script>
+
+
+/* ============================================================
+   DEMANDPULSE FRONTEND
+   ============================================================ */
+
+
+/*
+    If Flask is running on port 5000:
+
+        http://127.0.0.1:5000
+
+    the API path can stay relative.
+
+    If you are using VS Code Live Server:
+
+        http://127.0.0.1:5500
+
+    the frontend automatically tries port 5000.
+*/
+
+
+const API_BASE =
+    (
+        window.location.port === "5000" ||
+        window.location.port === ""
+    )
+        ? ""
+        : "http://127.0.0.1:5000";
+
+
+/* ============================================================
+   APPLICATION DATA
+   ============================================================ */
+
+
+let summary = {};
+
+let predictions = [];
+
+let spikes = [];
+
+let features = [];
+
+let charts = {};
+
+
+/* ============================================================
+   DEMO DATA
+   ============================================================ */
+
+
+/*
+    This is only a fallback.
+
+    If your backend is running, the real API data will be used.
+
+    This means the UI does not become a blank page when you
+    open index.html before starting Flask.
+*/
+
+
+const demoSummary = {
+
+    total_sales: 184260,
+
+    average_sales: 1535.5,
+
+    critical_spikes: 7
+
+};
+
+
+const demoPredictions = [];
+
+
+for (
+    let i = 0;
+    i < 45;
+    i++
+) {
+
+    const base =
+        1450 +
+        Math.sin(i / 4) * 180;
+
+    const noise =
+        Math.sin(i * 1.7) * 75;
+
+    const actual =
+        base + noise;
+
+
+    const predicted =
+        base +
+        Math.sin(i / 5) * 50;
+
+
+    demoPredictions.push({
+
+        date:
+            `Day ${i + 1}`,
+
+        sales:
+            Math.round(actual),
+
+        prediction:
+            Math.round(predicted)
+
+    });
+
+}
+
+
+const demoSpikes = [
+
+    {
+        date: "Recent",
+        item: "High demand period",
+        demand: 2310
+    },
+
+    {
+        date: "Recent",
+        item: "Demand increase",
+        demand: 2190
+    },
+
+    {
+        date: "Recent",
+        item: "Unusual demand",
+        demand: 2085
+    }
+
+];
+
+
+const demoFeatures = [
+
+    {
+        Feature: "Recent demand",
+        Importance: 0.31
+    },
+
+    {
+        Feature: "Previous period",
+        Importance: 0.24
+    },
+
+    {
+        Feature: "Seasonal pattern",
+        Importance: 0.18
+    },
+
+    {
+        Feature: "Recent trend",
+        Importance: 0.13
+    },
+
+    {
+        Feature: "Calendar effect",
+        Importance: 0.08
+    },
+
+    {
+        Feature: "Other demand factors",
+        Importance: 0.06
+    }
+
+];
+
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+
+
+document
+    .querySelectorAll(".navigation-button")
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    openPage(
+                        button.dataset.page
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+function openPage(
+    pageName
+) {
+
+
+    document
+        .querySelectorAll(".page")
+        .forEach(
+            page => {
+
+                page.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    document
+        .querySelectorAll(".navigation-button")
+        .forEach(
+            button => {
+
+                button.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    const page =
+        document.getElementById(
+            pageName
+        );
+
+
+    const navigationButton =
+        document.querySelector(
+            `[data-page="${pageName}"]`
+        );
+
+
+    if (page) {
+
+        page.classList.add(
+            "active"
+        );
+
+    }
+
+
+    if (navigationButton) {
+
+        navigationButton.classList.add(
+            "active"
+        );
+
+    }
+
+
+    window.scrollTo(
+        {
+            top: 0,
+            behavior: "smooth"
+        }
+    );
+
+}
+
+
+/* ============================================================
+   API
+   ============================================================ */
+
+
+async function getAPI(
+    endpoint
+) {
+
+    const response =
+        await fetch(
+            API_BASE + endpoint
+        );
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            "API request failed: " +
+            endpoint
+        );
+
+    }
+
+
+    return response.json();
+
+}
+
+
+/* ============================================================
+   LOAD DATA
+   ============================================================ */
+
+
+async function loadApplicationData() {
+
+
+    try {
+
+
+        summary =
+            await getAPI(
+                "/api/summary"
+            );
+
+
+        predictions =
+            await getAPI(
+                "/api/predictions"
+            );
+
+
+        features =
+            await getAPI(
+                "/api/features"
+            );
+
+
+        spikes =
+            await getAPI(
+                "/api/spikes"
+            );
+
+
+        setConnection(
+            true,
+            "System Online"
+        );
+
+
+    }
+
+    catch (error) {
+
+
+        console.warn(
+            "Backend unavailable. Using demo data.",
+            error
+        );
+
+
+        summary =
+            demoSummary;
+
+
+        predictions =
+            demoPredictions;
+
+
+        features =
+            demoFeatures;
+
+
+        spikes =
+            demoSpikes;
+
+
+        setConnection(
+            false,
+            "Demo Mode"
+        );
+
+
+        const notice =
+            document.getElementById(
+                "backendNotice"
+            );
+
+
+        notice.style.display =
+            "block";
+
+
+        notice.innerHTML =
+            "<strong>Demo mode:</strong> " +
+            "The dashboard is running correctly, " +
+            "but the Flask backend is not currently connected. " +
+            "Start your backend to display your real dataset.";
+
+    }
+
+
+}
+
+
+/* ============================================================
+   CONNECTION STATUS
+   ============================================================ */
+
+
+function setConnection(
+    online,
+    text
+) {
+
+
+    const element =
+        document.getElementById(
+            "connectionStatus"
+        );
+
+
+    const label =
+        document.getElementById(
+            "connectionText"
+        );
+
+
+    if (online) {
+
+        element.classList.remove(
+            "offline"
+        );
+
+    }
+
+    else {
+
+        element.classList.add(
+            "offline"
+        );
+
+    }
+
+
+    label.textContent =
+        text;
+
+}
+
+
+/* ============================================================
+   SUMMARY
+   ============================================================ */
+
+
+function renderSummary() {
+
+
+    document.getElementById(
+        "totalDemand"
+    ).textContent =
+        formatNumber(
+            summary.total_sales
+        );
+
+
+    document.getElementById(
+        "averageDemand"
+    ).textContent =
+        formatDecimal(
+            summary.average_sales
+        );
+
+
+    const alertCount =
+        Number(
+            summary.critical_spikes ??
+            spikes.length ??
+            0
+        );
+
+
+    document.getElementById(
+        "totalAlerts"
+    ).textContent =
+        formatNumber(
+            alertCount
+        );
+
+
+    document.getElementById(
+        "dashboardAlertNumber"
+    ).textContent =
+        formatNumber(
+            alertCount
+        );
+
+
+    const status =
+        alertCount > 0
+            ? "Attention"
+            : "Normal";
+
+
+    const statusElement =
+        document.getElementById(
+            "planningStatus"
+        );
+
+
+    statusElement.textContent =
+        status;
+
+
+    statusElement.className =
+        "stat-number " +
+        (
+            alertCount > 0
+                ? "orange"
+                : "green"
+        );
+
+
+    if (
+        alertCount > 0
+    ) {
+
+
+        document.getElementById(
+            "dashboardAlertTitle"
+        ).textContent =
+            "Demand attention required";
+
+
+        document.getElementById(
+            "dashboardAlertDescription"
+        ).textContent =
+            alertCount +
+            " demand observations have been flagged for review.";
+
+    }
+
+    else {
+
+
+        document.getElementById(
+            "dashboardAlertTitle"
+        ).textContent =
+            "Demand is stable";
+
+
+        document.getElementById(
+            "dashboardAlertDescription"
+        ).textContent =
+            "No critical demand alerts were detected.";
+
+    }
+
+
+}
+
+
+/* ============================================================
+   PREDICTION DATA HELPERS
+   ============================================================ */
+
+
+function getPredictionColumns() {
+
+
+    if (
+        !predictions ||
+        predictions.length === 0
+    ) {
+
+        return {
+
+            actual: null,
+
+            predicted: null
+
+        };
+
+    }
+
+
+    const columns =
+        Object.keys(
+            predictions[0]
+        );
+
+
+    let actual =
+        findColumn(
+            columns,
+            [
+                "actual",
+                "sales",
+                "demand",
+                "y"
+            ]
+        );
+
+
+    let predicted =
+        findColumn(
+            columns,
+            [
+                "prediction",
+                "predicted",
+                "forecast",
+                "y_pred"
+            ]
+        );
+
+
+    /*
+        Do not expose model names.
+
+        If the backend has something like:
+
+            xgboost_prediction
+
+        it can still be detected internally.
+
+        The user only sees:
+
+            Predicted Demand
+    */
+
+
+    if (!predicted) {
+
+        predicted =
+            columns.find(
+                column => {
+
+                    const name =
+                        column.toLowerCase();
+
+                    return (
+                        name.includes(
+                            "prediction"
+                        ) ||
+                        name.includes(
+                            "forecast"
+                        ) ||
+                        name.includes(
+                            "pred"
+                        )
+                    );
+
+                }
+            );
+
+    }
+
+
+    return {
+
+        actual,
+
+        predicted
+
+    };
+
+}
+
+
+/* ============================================================
+   LATEST FORECAST
+   ============================================================ */
+
+
+function getLatestForecast() {
+
+
+    if (
+        !predictions ||
+        predictions.length === 0
+    ) {
+
+        return null;
+
+    }
+
+
+    const columns =
+        getPredictionColumns();
+
+
+    if (
+        !columns.predicted
+    ) {
+
+        return null;
+
+    }
+
+
+    const last =
+        predictions[
+            predictions.length - 1
+        ];
+
+
+    const value =
+        Number(
+            last[
+                columns.predicted
+            ]
+        );
+
+
+    return Number.isFinite(
+        value
+    )
+        ? value
+        : null;
+
+}
+
+
+/* ============================================================
+   FORECAST PAGE
+   ============================================================ */
+
+
+function renderForecast() {
+
+
+    const latest =
+        getLatestForecast();
+
+
+    const display =
+        latest === null
+            ? "—"
+            : formatDecimal(
+                latest
+            );
+
+
+    document.getElementById(
+        "latestForecast"
+    ).textContent =
+        display;
+
+
+    document.getElementById(
+        "forecastPageNumber"
+    ).textContent =
+        display;
+
+
+    document.getElementById(
+        "forecastLatestSmall"
+    ).textContent =
+        display;
+
+
+    document.getElementById(
+        "forecastAverage"
+    ).textContent =
+        formatDecimal(
+            summary.average_sales
+        );
+
+
+    document.getElementById(
+        "forecastRecords"
+    ).textContent =
+        formatNumber(
+            predictions.length
+        );
+
+
+    document.getElementById(
+        "forecastRecordSmall"
+    ).textContent =
+        formatNumber(
+            predictions.length
+        );
+
+}
+
+
+/* ============================================================
+   CHART CREATION
+   ============================================================ */
+
+
+function createPredictionChart(
+    canvasId
+) {
+
+
+    const canvas =
+        document.getElementById(
+            canvasId
+        );
+
+
+    if (!canvas) {
+
+        return;
+
+    }
+
+
+    const columns =
+        getPredictionColumns();
+
+
+    if (
+        !columns.actual ||
+        !columns.predicted
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+        Keep charts readable.
+
+        We don't dump every single record if
+        there are thousands of rows.
+    */
+
+
+    const data =
+        predictions.slice(
+            0,
+            100
+        );
+
+
+    const labels =
+        data.map(
+            (row, index) => {
+
+                const date =
+                    findValue(
+                        row,
+                        [
+                            "date",
+                            "Date",
+                            "timestamp"
+                        ]
+                    );
+
+
+                return date ??
+                    index + 1;
+
+            }
+        );
+
+
+    const actual =
+        data.map(
+            row =>
+                Number(
+                    row[
+                        columns.actual
+                    ]
+                )
+        );
+
+
+    const predicted =
+        data.map(
+            row =>
+                Number(
+                    row[
+                        columns.predicted
+                    ]
+                )
+        );
+
+
+    if (
+        charts[canvasId]
+    ) {
+
+        charts[
+            canvasId
+        ].destroy();
+
+    }
+
+
+    charts[
+        canvasId
+    ] =
+        new Chart(
+            canvas,
+            {
+
+                type: "line",
+
+
+                data: {
+
+                    labels,
+
+
+                    datasets: [
+
+                        {
+
+                            label:
+                                "Actual Demand",
+
+                            data:
+                                actual,
+
+                            borderColor:
+                                "#9b6cff",
+
+                            backgroundColor:
+                                "rgba(155,108,255,0.08)",
+
+                            borderWidth:
+                                2,
+
+                            pointRadius:
+                                1.5,
+
+                            tension:
+                                0.32,
+
+                            fill:
+                                true
+
+                        },
+
+
+                        {
+
+                            label:
+                                "Predicted Demand",
+
+                            data:
+                                predicted,
+
+                            borderColor:
+                                "#e8a45d",
+
+                            backgroundColor:
+                                "transparent",
+
+                            borderWidth:
+                                2,
+
+                            borderDash:
+                                [5,5],
+
+                            pointRadius:
+                                1.5,
+
+                            tension:
+                                0.32,
+
+                            fill:
+                                false
+
+                        }
+
+                    ]
+
+                },
+
+
+                options: {
+
+                    responsive:
+                        true,
+
+                    maintainAspectRatio:
+                        false,
+
+
+                    interaction: {
+
+                        mode:
+                            "index",
+
+                        intersect:
+                            false
+
+                    },
+
+
+                    plugins: {
+
+                        legend: {
+
+                            labels: {
+
+                                color:
+                                    "#a9a2b3",
+
+                                boxWidth:
+                                    10,
+
+                                padding:
+                                    15,
+
+                                font: {
+
+                                    size:
+                                        10
+
+                                }
+
+                            }
+
+                        }
+
+                    },
+
+
+                    scales: {
+
+                        x: {
+
+                            ticks: {
+
+                                color:
+                                    "#706a79",
+
+                                maxTicksLimit:
+                                    10,
+
+                                font: {
+
+                                    size:
+                                        9
+
+                                }
+
+                            },
+
+                            grid: {
+
+                                color:
+                                    "rgba(255,255,255,0.035)"
+
+                            }
+
+                        },
+
+
+                        y: {
+
+                            ticks: {
+
+                                color:
+                                    "#706a79",
+
+                                font: {
+
+                                    size:
+                                        9
+
+                                }
+
+                            },
+
+                            grid: {
+
+                                color:
+                                    "rgba(255,255,255,0.035)"
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+}
+
+
+/* ============================================================
+   FEATURE CHART
+   ============================================================ */
+
+
+function createFeatureChart() {
+
+
+    const canvas =
+        document.getElementById(
+            "featureChart"
+        );
+
+
+    if (!canvas) {
+
+        return;
+
+    }
+
+
+    if (
+        !features ||
+        features.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    const data =
+        features.slice(
+            0,
+            10
+        );
+
+
+    const labels =
+        data.map(
+            item =>
+                findValue(
+                    item,
+                    [
+                        "Feature",
+                        "feature",
+                        "name"
+                    ]
+                )
+        );
+
+
+    const values =
+        data.map(
+            item =>
+                Number(
+                    findValue(
+                        item,
+                        [
+                            "Importance",
+                            "importance",
+                            "value"
+                        ]
+                    )
+                )
+        );
+
+
+    if (
+        charts.feature
+    ) {
+
+        charts.feature.destroy();
+
+    }
+
+
+    charts.feature =
+        new Chart(
+            canvas,
+            {
+
+                type: "bar",
+
+
+                data: {
+
+                    labels,
+
+
+                    datasets: [
+
+                        {
+
+                            label:
+                                "Demand contribution",
+
+                            data:
+                                values,
+
+                            backgroundColor:
+                                "#9b6cff",
+
+                            borderRadius:
+                                5,
+
+                            borderWidth:
+                                0
+
+                        }
+
+                    ]
+
+                },
+
+
+                options: {
+
+                    indexAxis:
+                        "y",
+
+                    responsive:
+                        true,
+
+                    maintainAspectRatio:
+                        false,
+
+
+                    plugins: {
+
+                        legend: {
+
+                            display:
+                                false
+
+                        }
+
+                    },
+
+
+                    scales: {
+
+                        x: {
+
+                            ticks: {
+
+                                color:
+                                    "#777080",
+
+                                font: {
+
+                                    size:
+                                        9
+
+                                }
+
+                            },
+
+                            grid: {
+
+                                color:
+                                    "rgba(255,255,255,0.035)"
+
+                            }
+
+                        },
+
+
+                        y: {
+
+                            ticks: {
+
+                                color:
+                                    "#aaa4b2",
+
+                                font: {
+
+                                    size:
+                                        9
+
+                                }
+
+                            },
+
+                            grid: {
+
+                                display:
+                                    false
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+}
+
+
+/* ============================================================
+   ALERTS
+   ============================================================ */
+
+
+function renderAlerts() {
+
+
+    const count =
+        spikes.length;
+
+
+    document.getElementById(
+        "alertsPageCount"
+    ).textContent =
+        formatNumber(
+            count
+        );
+
+
+    document.getElementById(
+        "alertsPageStatus"
+    ).textContent =
+        count > 0
+            ? "Attention"
+            : "Normal";
+
+
+    const table =
+        document.getElementById(
+            "alertTable"
+        );
+
+
+    table.innerHTML =
+        "";
+
+
+    if (
+        !spikes ||
+        spikes.length === 0
+    ) {
+
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td colspan="4">
+
+                    No demand alerts detected.
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    spikes
+        .slice(0, 20)
+        .forEach(
+            spike => {
+
+
+                const date =
+                    findValue(
+                        spike,
+                        [
+                            "date",
+                            "Date",
+                            "timestamp"
+                        ]
+                    );
+
+
+                const item =
+                    findValue(
+                        spike,
+                        [
+                            "item",
+                            "Item",
+                            "product",
+                            "Product"
+                        ]
+                    );
+
+
+                const demand =
+                    findValue(
+                        spike,
+                        [
+                            "demand",
+                            "sales",
+                            "Sales",
+                            "value"
+                        ]
+                    );
+
+
+                const row =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                row.innerHTML = `
+
+                    <td>
+
+                        <span
+                            class="badge badge-critical"
+                        >
+                            Attention
+                        </span>
+
+                    </td>
+
+
+                    <td>
+                        ${safeText(date)}
+                    </td>
+
+
+                    <td>
+                        ${safeText(item)}
+                    </td>
+
+
+                    <td>
+                        ${formatValue(demand)}
+                    </td>
+
+                `;
+
+
+                table.appendChild(
+                    row
+                );
+
+            }
+        );
+
+}
+
+
+/* ============================================================
+   INSIGHTS
+   ============================================================ */
+
+
+function renderInsights() {
+
+
+    const container =
+        document.getElementById(
+            "insightList"
+        );
+
+
+    container.innerHTML =
+        "";
+
+
+    features
+        .slice(0, 6)
+        .forEach(
+            feature => {
+
+
+                const name =
+                    findValue(
+                        feature,
+                        [
+                            "Feature",
+                            "feature",
+                            "name"
+                        ]
+                    );
+
+
+                const importance =
+                    findValue(
+                        feature,
+                        [
+                            "Importance",
+                            "importance",
+                            "value"
+                        ]
+                    );
+
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                item.className =
+                    "insight-item";
+
+
+                item.innerHTML = `
+
+                    <div class="insight-name">
+
+                        ${safeText(name)}
+
+                    </div>
+
+
+                    <div class="insight-value">
+
+                        Contribution:
+                        ${formatValue(importance)}
+
+                    </div>
+
+                `;
+
+
+                container.appendChild(
+                    item
+                );
+
+            }
+        );
+
+
+    /*
+        Try to display the backend cluster image.
+
+        If the image doesn't exist, we simply hide it
+        instead of showing a broken-image icon.
+    */
+
+
+    const image =
+        document.getElementById(
+            "clusterImage"
+        );
+
+
+    image.src =
+        API_BASE +
+        "/outputs/kmeans_clusters.png";
+
+
+    image.onerror =
+        function() {
+
+            this.style.display =
+                "none";
+
+        };
+
+
+    image.onload =
+        function() {
+
+            this.style.display =
+                "block";
+
+        };
+
+}
+
+
+/* ============================================================
+   TRENDS
+   ============================================================ */
+
+
+function renderTrends() {
+
+
+    document.getElementById(
+        "trendAverage"
+    ).textContent =
+        formatDecimal(
+            summary.average_sales
+        );
+
+
+    document.getElementById(
+        "trendObservations"
+    ).textContent =
+        formatNumber(
+            predictions.length
+        );
+
+
+    document.getElementById(
+        "trendAlertCount"
+    ).textContent =
+        formatNumber(
+            spikes.length
+        );
+
+}
+
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+
+
+function findColumn(
+    columns,
+    names
+) {
+
+
+    for (
+        const wanted of names
+    ) {
+
+
+        const exact =
+            columns.find(
+                column =>
+                    column
+                        .toLowerCase() ===
+                    wanted
+                        .toLowerCase()
+            );
+
+
+        if (exact) {
+
+            return exact;
+
+        }
+
+    }
+
+
+    for (
+        const wanted of names
+    ) {
+
+
+        const partial =
+            columns.find(
+                column =>
+                    column
+                        .toLowerCase()
+                        .includes(
+                            wanted
+                                .toLowerCase()
+                        )
+            );
+
+
+        if (partial) {
+
+            return partial;
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+function findValue(
+    object,
+    possibleKeys
+) {
+
+
+    for (
+        const key of possibleKeys
+    ) {
+
+
+        if (
+            Object.prototype.hasOwnProperty
+                .call(
+                    object,
+                    key
+                )
+        ) {
+
+            return object[key];
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+function formatNumber(
+    value
+) {
+
+
+    if (
+        value === null ||
+        value === undefined ||
+        Number.isNaN(
+            Number(value)
+        )
+    ) {
+
+        return "—";
+
+    }
+
+
+    return Number(value)
+        .toLocaleString(
+            undefined,
+            {
+                maximumFractionDigits: 0
+            }
+        );
+
+}
+
+
+function formatDecimal(
+    value
+) {
+
+
+    if (
+        value === null ||
+        value === undefined ||
+        Number.isNaN(
+            Number(value)
+        )
+    ) {
+
+        return "—";
+
+    }
+
+
+    return Number(value)
+        .toLocaleString(
+            undefined,
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        );
+
+}
+
+
+function formatValue(
+    value
+) {
+
+
+    if (
+        value === null ||
+        value === undefined ||
+        value === ""
+    ) {
+
+        return "—";
+
+    }
+
+
+    if (
+        typeof value === "number"
+    ) {
+
+        return Number(value)
+            .toLocaleString(
+                undefined,
+                {
+                    maximumFractionDigits: 2
+                }
+            );
+
+    }
+
+
+    return safeText(
+        value
+    );
+
+}
+
+
+function safeText(
+    value
+) {
+
+
+    if (
+        value === null ||
+        value === undefined ||
+        value === ""
+    ) {
+
+        return "—";
+
+    }
+
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* ============================================================
+   INITIALIZE
+   ============================================================ */
+
+
+async function initialize() {
+
+
+    await loadApplicationData();
+
+
+    renderSummary();
+
+    renderForecast();
+
+    renderAlerts();
+
+    renderTrends();
+
+    renderInsights();
+
+
+    /*
+        Create charts after the DOM has been populated.
+    */
+
+
+    createPredictionChart(
+        "dashboardChart"
+    );
+
+
+    createPredictionChart(
+        "forecastChart"
+    );
+
+
+    createPredictionChart(
+        "trendChart"
+    );
+
+
+    createFeatureChart();
+
+}
+
+
+/* ============================================================
+   START APPLICATION
+   ============================================================ */
+
+
+initialize();
+
+
+</script>
+
+
+</body>
+
+</html>
